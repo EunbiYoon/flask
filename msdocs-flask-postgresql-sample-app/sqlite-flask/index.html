@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <h1>Quality Indicator</h1>
+    <div class="select">
+        <select name="format" id="format">
+            <option selected disabled>Product Model</option>
+            <option value="pdf">WT7100C*</option>
+            <option value="txt">WT7300C*</option>
+            <option value="epub">WT7400C*</option> 
+            <option value="fb2">WT7800H*A</option>
+            <option value="mobi">WT7900H*A</option>
+        </select>
+    </div>
+
+    <div class="select">
+        <select name="format" id="format">
+            <option selected disabled>Customer Symptom</option>
+            <option value="pdf">PDF</option>
+            <option value="txt">txt</option>
+            <option value="epub">ePub</option> 
+            <option value="fb2">fb2</option>
+            <option value="mobi">mobi</option>
+        </select>
+    </div>
+
+    <div class="select">
+        <select name="slct1" id="slct1" onchange="populate(this.id, 'slct2')">
+            <option selected disabled>Quality Indicator</option>
+            <option value="pyramid">Pyramid Chart</option>
+            <option value="hazard">Hazard Graph</option>
+            <option value="aar">AAR Chart</option> 
+            <option value="ffr">FFR & FDR Status</option>
+        </select>
+    </div>
+
+
+    <div class="select">
+        <select name="slct2" id="slct2">
+        </select>
+    </div>
+
+
+    <script>
+        function populate(s1, s2)
+        {
+            var s1 = document.getElementById(s1);
+            var s2 = document.getElementById(s2);
+
+            s2.innerHTML="";
+
+            if(s1.value=="aar")
+            {
+                var optionArray=['1 Month|1 Month', '2 Month|2 Month',
+                '3 Month|3 Month', '4 Month|4 Month', '5 Month|5 Month',
+                '6 Month|6 Month','7 Month|7 Month','8 Month|8 Month',
+                '9 Month|9 Month','10 Month|10 Month','11 Month|11 Month',
+                '12 Month|12 Month'];
+            }
+
+            else
+            {
+                var optionArray=['total|Total']
+            }
+
+            for(var option in optionArray)
+            {
+                var pair=optionArray[option].split("|");
+                var newoption=document.createElement("option");
+
+                newoption.value=pair[0];
+                newoption.innerHTML=pair[1];
+                s2.options.add(newoption)
+            }
+
+        }
+    </script>
+    
+</body>
+</html>

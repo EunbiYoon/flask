@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../static/css/code_explanation.css" rel="stylesheet" ></style>
+</head>
+<body>
+    <h1>install lbrary</h1>
+    <h2>from flask_mysqldb import MySQL </h2>
+
+    <h1>add configuration</h1>
+    <h2>mysql=MySQL()<br/>
+        app.config['MYSQL_USER']=''<br/>
+        app.config['MYSQL_HOST']='localhost'<br/>
+        app.config['MYSQL_DB']=''<br/></h2>
+
+    <h1>go to mysql workbench and find username</h1>
+    <h2>app.config['MYSQL_USER']='root'<br/></h2>
+
+    <h1>in workebnch create database and create table</h1>
+    <h2>create database name as "mydatabase"</h2>
+    <h2>in Query1, please type as below<br/>
+    CREATE TABLE clients(clientid INT NOT NULL PRIMARY KEY, clientname VARCHAR(40), clientemail VARCHAR(40), clientmessage VARCHAR(500));</h2>
+    
+    <h1>verify the table</h1>
+    <h2>show tables;</h2>
+    <h2>describe clients;</h2>
+
+    <h1>fill out configuration in python (password exist then, app.config['MYSQL_PASSWORD']="***"</h1>
+    <h2>mysql=MySQL()<br/>
+        app.config['MYSQL_USER']='root'<br/>
+        app.config['MYSQL_HOST']='localhost'<br/>
+        app.config['MYSQL_DB']='mydatabase'<br/></h2>
+
+    <h1>mysql init </h1> 
+    <h2>mysql.init_app(app) </h2>
+
+    <h1>if you cannot make table in the workbench, create table by python </h1>
+    <h2>with app.app_context():<br/>
+        #db.create_all()<br/>
+        cur=mysql.connection.cursor()<br/>
+        cur.execute('''<br/>
+        CREATE TABLE <br/>
+        ''')<br/>
+        cur.close()</h2>
+
+    <h1>send information into mysql</h1>
+    <h2> cur=mysql.connection.cursor() <br/>
+        cur.execute('''<br/>
+            INSERT INTO clients(clientid, clientname, clientemail, clientmessage)<br/>
+            VALUES(%s,%s,%s,%s);<br/>
+        ''', (randint(0,1000000),name,email,message))<br/>
+        mysql.connection.commit() #before closing this<br/>
+        cur.close()</h2>
+
+    <h1>check if we really have the data</h1>
+    <h2>
+        @app.route("/database")<br/>
+        def database():<br/>
+            cur=mysql.connection.cursor()<br/>
+            cur.execute('''<br/>
+                SELECT * FROM clients;<br/>
+            ''')<br/>
+            data=cur.fetchall()<br/>
+            cur.close()<br/>
+            return "%s" % data
+    </h2>
+
+    <h1>if you want to see specific data with filtering, change cur.execute as below</h1>
+    <h2>cur.execute('''<br/>
+        SELECT clinetmessage FROM clients WHERE clientname="dataname"; <br/>
+        ''')</h2>
+
+    <h1>test flask app and type information and check data in workbench</h1>
+    <h2>select * from clients;</h2>
+    <img src="../static/images/sql1.png" style="width:50%">
+
+    <h1>go to /database html and check all data</h1>
+    <h2>here is the error happened to solve this issue, please follow below</h2>
+    <img src="../static/images/error1.png" style="width:50%">
+    <img src="../static/images/error1-solve.png" style="width:50%">
+
+</body>
+</html>

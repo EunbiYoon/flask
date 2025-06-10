@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../static/css/code_explanation.css" rel="stylesheet" ></style>
+</head>
+<body>
+    <div class="container">
+        <h1>import new module </h1>
+        <h2>from flask_sqlalchemy import SQLAlchemy </h2>
+    
+        <h1>install library</h1>
+        <h2>pip install flask_sqlalchemy </h2>
+    
+        <h1>install sqlite file</h1>
+        <h2>go to below homepage and download file in your working folder. Make folder "sqlite" in the same "app.py" file location
+            <a href="url">https://www.sqlite.org/download.html</a></h2>
+        <img src="../static/images/sqlite_download.png" style="width:50%">
+        <img src="../static/images/sqlite_folder.png" style="width:20%">
+
+        <h1>
+
+        </h1>
+        <h1>configuration database</h1>
+        <h2>app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///C:\\Users\\eunbi1.yoon\\Desktop\\sqlalchemy-email\\sqlite\\test.db"</h2>
+    
+        <h1>create database and initiate database</h1>
+        <h2>db=SQLAlchemy()</h2>
+        <h2>class Clients(db.Model):<br/>
+            clientid=db.Column(db.Integer(),primary_key=True)<br/>
+            clientname=db.Column(db.String(40))<br/>
+            clientemail=db.Column(db.String(40))<br/>
+            clientmessage=db.Column(db.String(500))<br/>
+            def __repr__(self):<br/>
+                return f"Clinets('(self.clientid)','(self.clientname)','(self.clientemail)','(self.clientmessage)')"
+        </h2>
+        <h2>db.init_app(app)</h2>
+
+        <h1>only for first time data base **remove from 2nd try</h1>
+        <h2>with app.app_context():<br/>
+            db.create_all()</h2>
+
+        <h1>send information into sqlite (from random import randint)</h1>
+        <h2>
+            db.session.add(<br/>
+                Clients(<br/>
+                    clientid=randint(0,1000000),<br/>
+                    clientname=name,<br/>
+                    clientemail=email,<br/>
+                    clientmessage=message)<br/>
+            )<br/>
+            db.session.commit()<br/>
+            #SEND Information to SQLite</h2>
+        
+        <h1>"/database" you can view all query or filter query </h1>
+        <h2>@app.route("/database") <br/>
+            def database():<br/>
+                return render_template("database.html",clients=Clients.query.all())<br/>
+                # use filter function change as => return render_template("database.html",clinets=Clients.query.first(clientid="adfa"))<br/>
+        </h2>
+
+        <h1>create database.html</h1>
+        <img src="../static/images/databasehtml.png" style="width:30%">
+
+        <h1>review database result in "localhost/database"</h1>
+        <img src="../static/images/database.png" style="width:30%">
+    </div>
+
+    
+</body>
+</html>
